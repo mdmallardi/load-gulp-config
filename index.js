@@ -62,7 +62,7 @@ function iteraction(gulp, options, taskFile){
     Object.keys(task).forEach(function(cmd){
       if(typeof task[cmd] === 'function'){
         var alias = [filename, ':', cmd].join('');
-        gulp.task(alias, task[cmd].bind(gulp, filename));
+        gulp.task(alias, task[cmd].bind(gulp.task, cmd));
         cmds.push(alias);
       }
     });
