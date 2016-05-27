@@ -19,7 +19,7 @@ var config = require('load-gulp-config');
 var pack = config.utils.readJSON('package.json');
 
 config(gulp, {
-  configPath: config.utils.path.join(__dirname, 'tasks', '*.js'),
+  configPath: config.utils.path.join('tasks', '*.js'),
   data:Object.assign({ someCfg:{}, anyValue:1, anyParams:[] }, pack)
 });
 ```
