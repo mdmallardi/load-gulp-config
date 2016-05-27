@@ -35,10 +35,10 @@ config(gulp, {
 #### Example task file creating a task
 
 ```javascript
-module.exports = function(gulp, data, util, filename){
+module.exports = function(gulp, data, util, taskName){
 	'use strict';
 
-	gulp.task(filename, ['styles:main'], function(callback){
+	gulp.task(taskName, ['styles:main'], function(callback){
 		// return gulp.src(...);
 	});
 };
@@ -50,7 +50,7 @@ module.exports = function(gulp, data, util, filename){
 module.exports = function(){
 	'use strict';
 
-	return function(taskName, callback){
+	return function(cmdName, callback){
 		// return gulp.src(...);
 	};
 };
@@ -64,10 +64,10 @@ module.exports = function(gulp, data, util, filename){
 	'use strict';
   
 	return {
-		cmd1:function(taskName, callback){
+		cmd1:function(cmdName, callback){
 			// return gulp.src(...);
 		},
-		cmd2:function(taskName, callback){
+		cmd2:function(cmdName, callback){
 			// ...
 		}
 	};
