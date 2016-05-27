@@ -49,6 +49,7 @@ function loadGulpConfig(gulp, options){
   glob.sync(options.configPath, { realpath:true }).forEach(iteraction.bind(this, gulp, options));
 }
 
+// Externalize.
 loadGulpConfig.fs = fs;
 loadGulpConfig.path = path;
 loadGulpConfig.glob = glob;
