@@ -28,7 +28,7 @@ config(gulp, {
 ```
 
 
-#### Example js file creating a task - tasks/watch.js
+#### Example js file creating a task
 
 ```javascript
 module.exports = function(gulp, data, util, filename){
@@ -40,7 +40,7 @@ module.exports = function(gulp, data, util, filename){
 };
 ```
 
-#### Example js file returning a function - tasks/vendors.js
+#### Example js file returning a function
 
 ```javascript
 module.exports = function(){
@@ -53,7 +53,7 @@ module.exports = function(){
 ```
 
 
-#### Example js file returning a object - tasks/styles.js
+#### Example js file returning a object
 
 ```javascript
 module.exports = function(gulp, data, util, filename){
