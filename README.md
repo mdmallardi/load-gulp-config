@@ -9,7 +9,7 @@ npm install --save-dev adriancmiranda/load-gulp-config
 
 ## Usage
 
-```node
+```javascript
 // Allows you to break up your Gulpfile config by task
 // @see https://github.com/adriancmiranda/load-gulp-config
 var config = require('load-gulp-config');
@@ -34,16 +34,8 @@ config(gulp, {
 module.exports = function(gulp, data, util, filename){
 	'use strict';
 
-	// Live CSS Reload & Browser Syncing.
-	// @see https://www.npmjs.com/package/browser-sync
-	var browserSync = require('browser-sync').create();
-
 	gulp.task(filename, ['styles:main'], function(callback){
-		browserSync.init({ server:'./' });
-		gulp.watch(util.path.join(data.appDirs.styles, '**/*.scss'), ['styles:main']);
-		gulp.watch(util.path.join(data.appDirs.scripts, '**/*.js')).on('change', browserSync.reload);
-		gulp.watch(util.path.join(data.appDirs.images, '**/*.{jpg,png,gif,svg}')).on('change', browserSync.reload);
-		gulp.watch(util.path.join(data.appDirs.views, '**/*.html')).on('change', browserSync.reload);
+		gulp.watch(util.path.join('styles', '**/*.scss'), ['styles:main']);
 	});
 };
 ```
@@ -53,16 +45,9 @@ module.exports = function(gulp, data, util, filename){
 ```javascript
 module.exports = function(){
 	'use strict';
-	
-	// Preen unwanted files in packages installed via Bower.
-	// @see https://www.npmjs.com/package/gulp-imagemin
-	var preen = require('preen');
 
 	return function(taskName, callback){
-		return preen.preen({
-			verbose:false,
-			preview:false
-		}, callback);
+		// return gulp.src(...);
 	};
 };
 ```
@@ -72,15 +57,15 @@ module.exports = function(){
 
 ```javascript
 module.exports = function(gulp, data, util, filename){
-  'use strict';
+	'use strict';
   
-  return {
-    cmd1:function(taskName, callback){
-      // return gulp.src(...);
-    },
-    cmd2:function(taskName, callback){
-      // ...
-    }
-  };
+	return {
+		cmd1:function(taskName, callback){
+			// return gulp.src(...);
+		},
+		cmd2:function(taskName, callback){
+			// ...
+		}
+	};
 };
 ```
