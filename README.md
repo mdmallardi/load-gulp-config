@@ -76,7 +76,7 @@ module.exports = function(gulp, data, util, filename){
   
   return {
     cmd1:function(taskName, callback){
-      // ...
+      // return gulp.src(...);
     },
     cmd2:function(taskName, callback){
       // ...
