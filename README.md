@@ -35,7 +35,7 @@ module.exports = function(gulp, data, util, filename){
 	'use strict';
 
 	gulp.task(filename, ['styles:main'], function(callback){
-		gulp.watch(util.path.join('styles', '**/*.scss'), ['styles:main']);
+		// return gulp.src(...);
 	});
 };
 ```
@@ -43,6 +43,8 @@ module.exports = function(gulp, data, util, filename){
 #### Example js file returning a function
 
 ```javascript
+// tasks/task_fn.js
+// $ gulp task_fn
 module.exports = function(){
 	'use strict';
 
@@ -56,6 +58,10 @@ module.exports = function(){
 #### Example js file returning a object
 
 ```javascript
+// tasks/task_fn.js
+// $ gulp task_fn
+// $ gulp task_fn:cmd2
+// $ gulp task_fn:cmd1
 module.exports = function(gulp, data, util, filename){
 	'use strict';
   
