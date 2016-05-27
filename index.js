@@ -37,7 +37,7 @@ function readYAML(filepath){
 }
 
 // Configure multitasks from aliases.yml
-function configure(gulp, aliases){
+function createMultitasks(gulp, aliases){
   for(var task in aliases){
     if(aliases.hasOwnProperty(task)){
       var cmds = [];
@@ -47,11 +47,12 @@ function configure(gulp, aliases){
       gulp.task(task, cmds);
     }
   }
+  return aliases;
 }
 
 // Define a task using [Orchestrator](https://github.com/robrich/orchestrator).
 // @see https://github.com/gulpjs/gulp/blob/master/docs/API.md#gulptaskname--deps--fn
-function iteraction(gulp, options, taskFile){
+function createTask(gulp, options, taskFile){
   var cmds = [];
   var extension = path.extname(taskFile);
   var filename = path.basename(taskFile, extension);
@@ -70,14 +71,24 @@ function iteraction(gulp, options, taskFile){
   }
 }
 
+// Filter files by extension.
+function filterFiles(gulp, options, taskFile){
+  var ext = path.extname(taskFile);
+  if(/\.js$/.test(ext)){
+    createTask(gulp, options, taskFile);
+  }else if(/\.ya?ml$/.test(ext)){
+    createMultitasks(gulp, options.aliases);
+  }
+}
+
 // Load multiple gulp tasks using globbing patterns.
 function loadGulpConfig(gulp, options){
   options = Object.assign({ data:{} }, options);
   options.configPath = typeof options.configPath === 'string'? options.configPath : 'tasks';
   options.aliases = options.aliases === Object(options.aliases)? options.aliases : null;
   options.aliases = options.aliases || readYAML(path.join(path.dirname(options.configPath), 'aliases.yml'));
-  glob.sync(options.configPath, { realpath:true }).forEach(iteraction.bind(this, gulp, options));
-  loadGulpConfig.aliases = configure(gulp, options.aliases);
+  glob.sync(options.configPath, { realpath:true }).forEach(filterFiles.bind(this, gulp, options));
+  loadGulpConfig.aliases = createMultitasks(gulp, options.aliases);
 }
 
 // Externalize dependencies.
