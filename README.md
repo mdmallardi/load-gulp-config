@@ -23,8 +23,3 @@ loadGulpConfig(gulp, {
   data:Object.assign({ someCfg:{}, anyValue:1, anyParams:[] }, pack)
 });
 ```
-
-## Dependencies
-
-* [glob](https://www.npmjs.com/package/glob)
-
