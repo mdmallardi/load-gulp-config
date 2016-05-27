@@ -19,7 +19,10 @@ var config = require('load-gulp-config');
 var pack = config.utils.readJSON('package.json');
 
 config(gulp, {
+  // path to task.js files, defaults to grunt dir
   configPath: config.utils.path.join('tasks', '*.js'),
+  
+  // data passed into config task.
   data:Object.assign({ someCfg:{}, anyValue:1, anyParams:[] }, pack)
 });
 ```
