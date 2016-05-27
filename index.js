@@ -49,9 +49,13 @@ function loadGulpConfig(gulp, options){
   glob.sync(options.configPath, { realpath:true }).forEach(iteraction.bind(this, gulp, options));
 }
 
-// Externalize.
-loadGulpConfig.fs = fs;
-loadGulpConfig.path = path;
-loadGulpConfig.glob = glob;
-loadGulpConfig.readJSON = readJSON;
+// Externalize dependencies.
+loadGulpConfig.utils = {
+  fs:fs,
+  path:path,
+  glob:glob,
+  readJSON:readJSON
+};
+
+// Externalize `load-gulp-config` module.
 module.exports = loadGulpConfig;
