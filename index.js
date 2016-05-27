@@ -30,12 +30,12 @@ function iteraction(gulp, options, taskFile){
   var filename = path.basename(taskFile, extension);
   var task = require(taskFile)(gulp, options.data, path, readJSON);
   if(typeof task === 'function'){
-    gulp.task(filename, task);
+    gulp.task(filename, task.bind(gulp, filename));
   }else if(task === Object(task)){
     Object.keys(task).forEach(function(cmd){
       if(typeof task[cmd] === 'function'){
         var alias = [filename, ':', cmd].join('');
-        gulp.task(alias, task[cmd]);
+        gulp.task(alias, task[cmd].bind(gulp, filename));
         cmds.push(alias);
       }
     });
