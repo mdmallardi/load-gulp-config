@@ -1,6 +1,10 @@
 # load-gulp-config
 > Allows you to break up your Gulpfile config by task
 
+## Features
+- Each task has its own config file e.g. tasks/git.js, tasks/styles.js, tasks/scripts.js, ...
+
+
 ## Installation
 
 ```terminal
