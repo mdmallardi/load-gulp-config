@@ -46,6 +46,7 @@ function iteraction(gulp, options, taskFile){
 // Load multiple gulp tasks using globbing patterns.
 function loadGulpConfig(gulp, options){
   options = Object.assign({ data:{} }, options);
+  options.configPath = typeof options.configPath === 'string'? options.configPath : 'tasks';
   glob.sync(options.configPath, { realpath:true }).forEach(iteraction.bind(this, gulp, options));
 }
 
