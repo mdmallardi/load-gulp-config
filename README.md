@@ -23,7 +23,7 @@ var config = require('load-gulp-config');
 var pack = config.utils.readJSON('package.json');
 
 config(gulp, {
-  // path to task.js files, defaults to grunt dir
+  // path to task's files, defaults to gulp dir
   configPath: config.utils.path.join('tasks', '*.js'),
   
   // data passed into config task.
@@ -32,7 +32,7 @@ config(gulp, {
 ```
 
 
-#### Example js file creating a task
+#### Example task file creating a task
 
 ```javascript
 module.exports = function(gulp, data, util, filename){
@@ -44,11 +44,9 @@ module.exports = function(gulp, data, util, filename){
 };
 ```
 
-#### Example js file returning a function
+#### Example task file returning a function
 
 ```javascript
-// tasks/task_fn.js
-// $ gulp task_fn
 module.exports = function(){
 	'use strict';
 
@@ -62,10 +60,6 @@ module.exports = function(){
 #### Example js file returning a object
 
 ```javascript
-// tasks/task_fn.js
-// $ gulp task_fn
-// $ gulp task_fn:cmd2
-// $ gulp task_fn:cmd1
 module.exports = function(gulp, data, util, filename){
 	'use strict';
   
