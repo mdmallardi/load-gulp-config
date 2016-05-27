@@ -44,7 +44,7 @@ function configure(gulp, aliases){
       aliases[task].forEach(function(cmd){
         cmds.push(cmd);
       });
-      gulp.task(key, cmds);
+      gulp.task(task, cmds);
     }
   }
 }
