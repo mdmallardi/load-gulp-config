@@ -31,14 +31,22 @@ function readJSON(filepath){
 function readYAML(filepath){
   var buffer = {};
   try{
-    buffer = YAML.safeLoad(fs.readFileSync(filepath, 'utf8'));
+    buffer = YAML.safeLoad(fs.readFileSync(filepath, { schema:YAML.DEFAULT_FULL_SCHEMA }));
   }catch(error){}
   return buffer;
 }
 
-function configure(aliases){
-  loadGulpConfig.aliases = aliases;
-  console.log('aliases:', aliases);
+// Configure multitasks from aliases.yml
+function configure(gulp, aliases){
+  for(var task in aliases){
+    if(aliases.hasOwnProperty(task)){
+      var cmds = [];
+      aliases[task].forEach(function(cmd){
+        cmds.push(cmd);
+      });
+      gulp.task(key, cmds);
+    }
+  }
 }
 
 // Define a task using [Orchestrator](https://github.com/robrich/orchestrator).
@@ -67,9 +75,9 @@ function loadGulpConfig(gulp, options){
   options = Object.assign({ data:{} }, options);
   options.configPath = typeof options.configPath === 'string'? options.configPath : 'tasks';
   options.aliases = options.aliases === Object(options.aliases)? options.aliases : null;
-  options.aliases = options.aliases || readYAML(path.join(options.configPath, 'aliases.yml'));
+  options.aliases = options.aliases || readYAML(path.join(path.dirname(options.configPath), 'aliases.yml'));
   glob.sync(options.configPath, { realpath:true }).forEach(iteraction.bind(this, gulp, options));
-  configure(options.aliases);
+  loadGulpConfig.aliases = configure(gulp, options.aliases);
 }
 
 // Externalize dependencies.
