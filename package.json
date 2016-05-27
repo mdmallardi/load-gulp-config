@@ -18,7 +18,8 @@
     "url": "https://github.com/adriancmiranda/load-gulp-config/issues"
   },
   "dependencies": {
-    "glob": "latest"
+    "glob": "latest",
+    "js-yaml": "latest"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
