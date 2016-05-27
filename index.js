@@ -28,7 +28,7 @@ function iteraction(gulp, options, taskFile){
   var cmds = [];
   var extension = path.extname(taskFile);
   var filename = path.basename(taskFile, extension);
-  var task = require(taskFile)(gulp, options.data, loadGulpConfig.utils);
+  var task = require(taskFile)(gulp, options.data, loadGulpConfig.utils, filename);
   if(typeof task === 'function'){
     gulp.task(filename, task.bind(gulp, filename));
   }else if(task === Object(task)){
