@@ -12,14 +12,14 @@ npm install --save-dev adriancmiranda/load-gulp-config
 ```node
 // Allows you to break up your Gulpfile config by task
 // @see https://github.com/adriancmiranda/load-gulp-config
-var loadGulpConfig = require('load-gulp-config');
+var config = require('load-gulp-config');
 
 // Specifics of npm's package.json handling
 // @see https://docs.npmjs.com/files/package.json
-var pack = loadGulpConfig.readJSON('package.json');
+var pack = config.utils.readJSON('package.json');
 
-loadGulpConfig(gulp, {
-  configPath: loadGulpConfig.path.join(__dirname, 'tasks', '*.js'),
+config(gulp, {
+  configPath: config.utils.path.join(__dirname, 'tasks', '*.js'),
   data:Object.assign({ someCfg:{}, anyValue:1, anyParams:[] }, pack)
 });
 ```
