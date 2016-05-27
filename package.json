@@ -1,0 +1,37 @@
+
+{
+  "name": "load-gulp-config",
+  "main": "index.js",
+  "version": "0.0.1",
+  "description": "Allows you to break up your Gulpfile config by task",
+  "license": "MIT",
+  "homepage": "https://github.com/adriancmiranda/load-gulp-config",
+  "author": {
+    "name": "Adrian C. Miranda",
+    "url": "https://github.com/adriancmiranda"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/adriancmiranda/load-gulp-config.git"
+  },
+  "bugs": {
+    "url": "https://github.com/adriancmiranda/load-gulp-config/issues"
+  },
+  "dependencies": {
+    "glob": "latest"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "gulp",
+    "gulpfile",
+    "gulpfile.js",
+    "break",
+    "external",
+    "gruntplugin",
+    "config",
+    "tasks",
+    "load-gulp-config"
+  ]
+}
