@@ -60,7 +60,6 @@ function iteraction(gulp, options, taskFile){
     });
     gulp.task(filename, cmds);
   }
-  configure(options.aliases);
 }
 
 // Load multiple gulp tasks using globbing patterns.
@@ -70,6 +69,7 @@ function loadGulpConfig(gulp, options){
   options.aliases = options.aliases === Object(options.aliases)? options.aliases : null;
   options.aliases = options.aliases || readYAML(path.join(options.configPath, 'aliases.yml'));
   glob.sync(options.configPath, { realpath:true }).forEach(iteraction.bind(this, gulp, options));
+  configure(options.aliases);
 }
 
 // Externalize dependencies.
