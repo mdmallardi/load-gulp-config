@@ -22,6 +22,8 @@ function readJSON(filepath){
   return buffer;
 }
 
+// Define a task using [Orchestrator](https://github.com/robrich/orchestrator).
+// @see https://github.com/gulpjs/gulp/blob/master/docs/API.md#gulptaskname--deps--fn
 function iteraction(gulp, options, taskFile){
   var cmds = [];
   var extension = path.extname(taskFile);
