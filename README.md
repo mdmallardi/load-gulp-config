@@ -19,6 +19,8 @@
 
 ## Features
 - Each task has its own config file e.g. tasks/git.js, tasks/styles.js, tasks/scripts.js, ...
+- Easily register task aliases with aliases `YAML` or `CSON` files.
+- Support for `CoffeeScript` files.
 
 
 ## Installation
