@@ -76,7 +76,7 @@ module.exports = function(){
 #### Example js file returning a object
 
 ```javascript
-module.exports = function(gulp, data, util, filename){
+module.exports = function(gulp, data, util, taskName){
 	'use strict';
   
 	return {
