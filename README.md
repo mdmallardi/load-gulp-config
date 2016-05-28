@@ -36,11 +36,11 @@ var config = require('load-gulp-config');
 
 // Specifics of npm's package.json handling
 // @see https://docs.npmjs.com/files/package.json
-var pack = config.utils.readJSON('package.json');
+var pack = config.util.readJSON('package.json');
 
 config(gulp, {
   // path to task's files, defaults to gulp dir
-  configPath: config.utils.path.join('tasks', '*.{js,json,coffee,ls,cson,yml,yaml}'),
+  configPath: config.util.path.join('tasks', '*.{js,json,coffee,ls,cson,yml,yaml}'),
   
   // data passed into config task.
   data:Object.assign({ someCfg:{}, anyValue:1, anyParams:[] }, pack)
@@ -54,7 +54,7 @@ config(gulp, {
 module.exports = function(gulp, data, util, taskName){
 	'use strict';
 
-	gulp.task(taskName, ['styles:main'], function(callback){
+	gulp.task(taskName, ['anotherTask:method'], function(callback){
 		// return gulp.src(...);
 	});
 };
@@ -66,7 +66,7 @@ module.exports = function(gulp, data, util, taskName){
 module.exports = function(){
 	'use strict';
 
-	return function(cmdName, callback){
+	return function(methodName, callback){
 		// return gulp.src(...);
 	};
 };
@@ -78,12 +78,14 @@ module.exports = function(){
 ```javascript
 module.exports = function(gulp, data, util, taskName){
 	'use strict';
+	
+	console.log('Running', taskName);
   
 	return {
-		cmd1:function(cmdName, callback){
+		cmd1:function(methodName, callback){
 			// return gulp.src(...);
 		},
-		cmd2:function(cmdName, callback){
+		cmd2:function(methodName, callback){
 			// ...
 		}
 	};
