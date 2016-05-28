@@ -140,4 +140,8 @@ JSON file:
 }
 ```
 
-Thank's to the [`load-grunt-config`](https://www.npmjs.com/package/load-grunt-config) module idea, that make this one possible.
+Thank's to the [`load-grunt-config`](https://www.npmjs.com/package/load-grunt-config) task idea and following modules, that make this one possible.
+- [js-yaml](https://www.npmjs.com/package/js-yaml)
+- [cson](https://www.npmjs.com/package/cson)
+- [glob](https://www.npmjs.com/package/glob)
+
