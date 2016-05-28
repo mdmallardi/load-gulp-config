@@ -47,8 +47,9 @@ config(gulp, {
 });
 ```
 
+### Task file examples:
 
-#### Example task file creating a task
+Creating tasks internally:
 
 ```javascript
 module.exports = function(gulp, data, util, taskName){
@@ -57,10 +58,14 @@ module.exports = function(gulp, data, util, taskName){
 	gulp.task(taskName, ['anotherTask:method'], function(callback){
 		// return gulp.src(...);
 	});
+	
+	gulp.task(taskName +':method', function(callback){
+		// return gulp.src(...);
+	});
 };
 ```
 
-#### Example task file returning a function
+Returning a function:
 
 ```javascript
 module.exports = function(){
@@ -73,7 +78,7 @@ module.exports = function(){
 ```
 
 
-#### Example js file returning a object
+Returning a object:
 
 ```javascript
 module.exports = function(gulp, data, util, taskName){
