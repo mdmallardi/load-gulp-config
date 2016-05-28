@@ -40,14 +40,14 @@ var pack = config.util.readJSON('package.json');
 
 config(gulp, {
   // path to task's files, defaults to gulp dir
-  configPath: config.util.path.join('tasks', '*.{js,json,coffee,ls,cson,yml,yaml}'),
+  configPath: config.util.path.join('tasks', '*.{js,json,coffee,cson,yml,yaml}'),
   
   // data passed into config task.
   data:Object.assign({ someCfg:{}, anyValue:1, anyParams:[] }, pack)
 });
 ```
 
-### Task file examples:
+### Task file examples
 
 Creating tasks internally:
 
@@ -93,4 +93,36 @@ module.exports = function(gulp, data, util, taskName){
 		}
 	};
 };
+```
+
+### Aliases
+
+If your gulp/ folder contains an `.json`, `.cson`, `.yml` or `.yaml` file `load-gulp-config` will use that to define your tasks aliases (like `gulp.task('default', ['task1', 'task2']);`).
+
+The following examples show the same aliases definition written in various formats
+
+#### Examples
+
+YAML file:
+
+```yaml
+--- 
+default: 
+  - 'build'
+  - 'task2'
+
+build: 
+  - 'task1:method'
+  - 'task2'
+  - 'task3'
+```
+
+
+JSON file:
+
+```json
+{
+  "default": ["build", "task2"],
+  "build": ["task1:method", "task2", "task3"]
+}
 ```
