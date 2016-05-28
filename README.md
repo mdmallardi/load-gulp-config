@@ -25,13 +25,13 @@
 
 ## Installation
 
-from [github](https://github.com "Github"):
+from [github](https://github.com/adriancmiranda/load-gulp-config "Github"):
 
 ```terminal
 npm i -D adriancmiranda/load-gulp-config
 ````
 
-from [npmjs](https://npmjs.com "NPM"):
+from [npmjs](https://www.npmjs.com/package/load-gulp-config "NPM"):
 
 ```terminal
 npm i -D load-gulp-config
