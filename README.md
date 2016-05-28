@@ -1,5 +1,5 @@
 # load-gulp-config
-> Load multiple gulp tasks using globbing patterns
+> Allows you to break up your Gulpfile config by task
 
 [![dependencies status][david_dependencies_status_image]][david_dependencies_status_url] 
 [![devDependency status][david_devdependencies_status_image]][david_devdependencies_status_url]
