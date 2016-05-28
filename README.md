@@ -1,108 +1,75 @@
-'use strict';
+# load-gulp-config
+> Allows you to break up your Gulpfile config by task
 
-// File I/O is provided by simple wrappers around standard POSIX functions.
-// @see https://nodejs.org/api/fs.html
-var fs = require('fs');
+## Features
+- Each task has its own config file e.g. tasks/git.js, tasks/styles.js, tasks/scripts.js, ...
 
-// This module contains utilities for handling and transforming file paths.
-// @see https://nodejs.org/api/path.html
-var path = require('path');
 
-// A little globber
-// @see https://www.npmjs.com/package/glob
-var glob = require('glob');
+## Installation
 
-// CoffeeScript-Object-Notation Parser. Same as JSON but for CoffeeScript objects.
-// @see https://www.npmjs.com/package/cson
-var CSON = require('cson');
+```terminal
+npm install --save-dev adriancmiranda/load-gulp-config
+````
 
-// YAML 1.2 parser and serializer.
-// @see https://www.npmjs.com/package/js-yaml
-var YAML = require('js-yaml');
+## Usage
 
-// Synchronous version of `fs.readFile`. Returns the contents of the file and parse to JSON.
-// @see https://nodejs.org/api/fs.html#fs_fs_readfilesync_file_options
-function readJSON(filepath){
-  var buffer = {};
-  try{
-    buffer = JSON.parse(fs.readFileSync(filepath, { encoding:'utf8' }));
-  } catch(error){}
-  return buffer;
-}
+```javascript
+// Allows you to break up your Gulpfile config by task
+// @see https://github.com/adriancmiranda/load-gulp-config
+var config = require('load-gulp-config');
 
-// Synchronous version of `fs.readFile`. Returns the contents of the file and parse to YAML.
-// @see https://nodejs.org/api/fs.html#fs_fs_readfilesync_file_options
-function readYAML(filepath){
-  var buffer = {};
-  try{
-    buffer = YAML.safeLoad(fs.readFileSync(filepath, { schema:YAML.DEFAULT_FULL_SCHEMA }));
-  }catch(error){}
-  return buffer;
-}
+// Specifics of npm's package.json handling
+// @see https://docs.npmjs.com/files/package.json
+var pack = config.utils.readJSON('package.json');
 
-// Configure multitasks from aliases.yml
-function createMultitasks(gulp, aliases){
-  for(var task in aliases){
-    if(aliases.hasOwnProperty(task)){
-      var cmds = [];
-      aliases[task].forEach(function(cmd){
-        cmds.push(cmd);
-      });
-      gulp.task(task, cmds);
-    }
-  }
-  return aliases;
-}
+config(gulp, {
+  // path to task's files, defaults to gulp dir
+  configPath: config.utils.path.join('tasks', '*.js'),
+  
+  // data passed into config task.
+  data:Object.assign({ someCfg:{}, anyValue:1, anyParams:[] }, pack)
+});
+```
 
-// Define a task using [Orchestrator](https://github.com/robrich/orchestrator).
-// @see https://github.com/gulpjs/gulp/blob/master/docs/API.md#gulptaskname--deps--fn
-function createTask(gulp, options, taskFile){
-  var cmds = [];
-  var extension = path.extname(taskFile);
-  var filename = path.basename(taskFile, extension);
-  var task = require(taskFile)(gulp, options.data, loadGulpConfig.utils, filename);
-  if(typeof task === 'function'){
-    gulp.task(filename, task.bind(gulp, filename));
-  }else if(task === Object(task)){
-    Object.keys(task).forEach(function(cmd){
-      if(typeof task[cmd] === 'function'){
-        var alias = [filename, ':', cmd].join('');
-        gulp.task(alias, task[cmd].bind(gulp.task, cmd));
-        cmds.push(alias);
-      }
-    });
-    gulp.task(filename, cmds);
-  }
-}
 
-// Filter files by extension.
-function filterFiles(gulp, options, taskFile){
-  var ext = path.extname(taskFile);
-  if(/\.js$/i.test(ext)){
-    createTask(gulp, options, taskFile);
-  }else if(/(json|js|coffee|ls)$/i){
-    createMultitasks(gulp, require(taskFile));
-  }else if(/\.ya?ml$/i.test(ext)){
-    createMultitasks(gulp, readYAML(taskFile));
-  }else if(/\.cson$/i.test(ext)){
-    createMultitasks(gulp, CSON.parseCSONFile(taskFile));
-  }
-}
+#### Example task file creating a task
 
-// Load multiple gulp tasks using globbing patterns.
-function loadGulpConfig(gulp, options){
-  options = Object.assign({ data:{} }, options);
-  options.configPath = typeof options.configPath === 'string'? options.configPath : 'tasks';
-  glob.sync(options.configPath, { realpath:true }).forEach(filterFiles.bind(this, gulp, options));
-}
+```javascript
+module.exports = function(gulp, data, util, taskName){
+	'use strict';
 
-// Externalize dependencies.
-loadGulpConfig.utils = {
-  fs:fs,
-  path:path,
-  glob:glob,
-  readJSON:readJSON
+	gulp.task(taskName, ['styles:main'], function(callback){
+		// return gulp.src(...);
+	});
 };
+```
 
-// Externalize `load-gulp-config` module.
-module.exports = loadGulpConfig;
+#### Example task file returning a function
+
+```javascript
+module.exports = function(){
+	'use strict';
+
+	return function(cmdName, callback){
+		// return gulp.src(...);
+	};
+};
+```
+
+
+#### Example js file returning a object
+
+```javascript
+module.exports = function(gulp, data, util, filename){
+	'use strict';
+  
+	return {
+		cmd1:function(cmdName, callback){
+			// return gulp.src(...);
+		},
+		cmd2:function(cmdName, callback){
+			// ...
+		}
+	};
+};
+```
