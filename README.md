@@ -32,6 +32,10 @@ npm i -D adriancmiranda/load-gulp-config
 ## Usage
 
 ```javascript
+// The streaming build system.
+// @see https://www.npmjs.com/package/gulp
+var gulp = require('gulp');
+
 // Load multiple gulp tasks using globbing patterns.
 // @see https://github.com/adriancmiranda/load-gulp-config
 var config = require('load-gulp-config');
