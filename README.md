@@ -74,7 +74,9 @@ module.exports = function(gulp, data){
 	'use strict';
 	
 	console.log([
+		'\t- someCfg:'+ data.someCfg,
 		'\t- anyValue:'+ data.anyValue,
+		'\t- anyParams:'+ data.anyParams,
 		'\t- package.version:'+ data.version
 	].join('\n'));
 	
