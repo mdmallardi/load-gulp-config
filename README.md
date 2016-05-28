@@ -140,7 +140,7 @@ JSON file:
 }
 ```
 
-Thank's to the [`load-grunt-config`](https://www.npmjs.com/package/load-grunt-config) task idea and following modules, that make this one possible.
+Thank's to the [`load-grunt-config`](https://www.npmjs.com/package/load-grunt-config "Load multiple grunt tasks using globbing patterns") task idea and following modules, that make this one possible.
 - [js-yaml](https://www.npmjs.com/package/js-yaml "YAML 1.2 parser and serializer")
 - [cson](https://www.npmjs.com/package/cson "CoffeeScript-Object-Notation Parser. Same as JSON but for CoffeeScript objects.")
 - [glob](https://www.npmjs.com/package/glob "A little globber")
