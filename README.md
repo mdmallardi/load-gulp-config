@@ -45,7 +45,7 @@ var config = require('load-gulp-config');
 var pack = config.util.readJSON('package.json');
 
 config(gulp, {
-  // path to task's files, defaults to gulp dir
+  // path to task's files, defaults to gulp dir.
   configPath: config.util.path.join('tasks', '*.{js,json,coffee,cson,yml,yaml}'),
   
   // data passed into config task.
