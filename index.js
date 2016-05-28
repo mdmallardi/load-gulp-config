@@ -46,7 +46,7 @@ function createTask(gulp, options, taskFile){
   var cmds = [];
   var extension = path.extname(taskFile);
   var filename = path.basename(taskFile, extension);
-  var task = require(taskFile)(gulp, options.data, loadGulpConfig.utils, filename);
+  var task = require(taskFile)(gulp, options.data, loadGulpConfig.util, filename);
   if(typeof task === 'function'){
     gulp.task(filename, task.bind(gulp, filename));
   }else if(task === Object(task)){
@@ -97,7 +97,7 @@ function loadGulpConfig(gulp, options){
 }
 
 // Externalize dependencies.
-loadGulpConfig.utils = {
+loadGulpConfig.util = {
   fs:fs,
   path:path,
   glob:glob,
