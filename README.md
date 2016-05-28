@@ -24,7 +24,7 @@ var pack = config.utils.readJSON('package.json');
 
 config(gulp, {
   // path to task's files, defaults to gulp dir
-  configPath: config.utils.path.join('tasks', '*.js'),
+  configPath: config.utils.path.join('tasks', '*.{js,json,coffee,ls,cson,yml,yaml}'),
   
   // data passed into config task.
   data:Object.assign({ someCfg:{}, anyValue:1, anyParams:[] }, pack)
