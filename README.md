@@ -8,7 +8,7 @@
 ## Installation
 
 ```terminal
-npm install --save-dev adriancmiranda/load-gulp-config
+npm i -D adriancmiranda/load-gulp-config
 ````
 
 ## Usage
