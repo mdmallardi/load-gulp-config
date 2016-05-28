@@ -29,6 +29,12 @@
 npm i -D adriancmiranda/load-gulp-config
 ````
 
+or
+
+```terminal
+npm i -D load-gulp-config
+````
+
 ## Usage
 
 ```javascript
