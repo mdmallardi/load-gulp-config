@@ -1,5 +1,5 @@
 # load-gulp-config
-> Allows you to break up your Gulpfile config by task
+> Load multiple gulp tasks using globbing patterns
 
 [![dependencies status][david_dependencies_status_image]][david_dependencies_status_url] 
 [![devDependency status][david_devdependencies_status_image]][david_devdependencies_status_url]
@@ -83,8 +83,6 @@ Returning a object:
 ```javascript
 module.exports = function(gulp, data, util, taskName){
 	'use strict';
-	
-	console.log('Running', taskName);
   
 	return {
 		cmd1:function(methodName, callback){
