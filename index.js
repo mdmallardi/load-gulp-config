@@ -40,20 +40,6 @@ function readYAML(filepath){
   return buffer;
 }
 
-// Configure multitasks from aliases.yml
-function createMultitasks(gulp, aliases){
-  for(var task in aliases){
-    if(aliases.hasOwnProperty(task)){
-      var cmds = [];
-      aliases[task].forEach(function(cmd){
-        cmds.push(cmd);
-      });
-      gulp.task(task, cmds);
-    }
-  }
-  return aliases;
-}
-
 // Define a task using [Orchestrator](https://github.com/robrich/orchestrator).
 // @see https://github.com/gulpjs/gulp/blob/master/docs/API.md#gulptaskname--deps--fn
 function createTask(gulp, options, taskFile){
@@ -75,16 +61,30 @@ function createTask(gulp, options, taskFile){
   }
 }
 
+// Configure multitasks from aliases.yml
+function createMultitasks(gulp, aliases){
+  for(var task in aliases){
+    if(aliases.hasOwnProperty(task)){
+      var cmds = [];
+      aliases[task].forEach(function(cmd){
+        cmds.push(cmd);
+      });
+      gulp.task(task, cmds);
+    }
+  }
+  return aliases;
+}
+
 // Filter files by extension.
 function filterFiles(gulp, options, taskFile){
   var ext = path.extname(taskFile);
-  if(/\.js$/i.test(ext)){
+  if(/\.(js|coffee)$/i.test(ext)){
     createTask(gulp, options, taskFile);
-  }else if(/\.(json|js|coffee|ls)$/i.test(ext)){
+  }else if(/\.(json)$/i.test(ext)){
     createMultitasks(gulp, require(taskFile));
-  }else if(/\.ya?ml$/i.test(ext)){
+  }else if(/\.(ya?ml)$/i.test(ext)){
     createMultitasks(gulp, readYAML(taskFile));
-  }else if(/\.cson$/i.test(ext)){
+  }else if(/\.(cson)$/i.test(ext)){
     createMultitasks(gulp, CSON.parseCSONFile(taskFile));
   }
 }
@@ -101,7 +101,10 @@ loadGulpConfig.utils = {
   fs:fs,
   path:path,
   glob:glob,
-  readJSON:readJSON
+  cson:CSON,
+  yaml:YAML,
+  readJSON:readJSON,
+  readYAML:readYAML
 };
 
 // Externalize `load-gulp-config` module.
