@@ -58,11 +58,11 @@ module.exports = function(gulp, data, util, taskName){
 	'use strict';
 
 	gulp.task(taskName, ['anotherTask:method'], function(callback){
-		// return gulp.src(...);
+		// return gulp.src(util.path.join('files/', '**/*.js'));
 	});
 	
 	gulp.task(taskName +':method', function(callback){
-		// return gulp.src(...);
+		// return gulp.src(util.path.join('files/', '**/*.*'));
 	});
 };
 ```
@@ -81,7 +81,7 @@ module.exports = function(gulp, data){
 	].join('\n'));
 	
 	return function(methodName, callback){
-		// return gulp.src(...);
+		// return gulp.src(util.path.join(data.someCfg.dir, '**/*.js'));
 	};
 };
 ```
