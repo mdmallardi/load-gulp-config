@@ -18,6 +18,7 @@
     "url": "https://github.com/adriancmiranda/load-gulp-config/issues"
   },
   "dependencies": {
+    "cson": "latest",
     "glob": "latest",
     "js-yaml": "latest"
   },
