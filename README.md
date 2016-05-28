@@ -73,7 +73,11 @@ Returning a function:
 module.exports = function(gulp, data){
 	'use strict';
 	
-	console.log('\t- anyValue:', data.anyValue, '\n\t- package.version:', data.version);
+	console.log([
+		'\t- anyValue:'+ data.anyValue,
+		'\t- package.version:'+ data.version
+	].join('\n'));
+	
 	return function(methodName, callback){
 		// return gulp.src(...);
 	};
