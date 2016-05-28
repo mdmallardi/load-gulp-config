@@ -97,7 +97,7 @@ module.exports = function(gulp, data, util, taskName){
 };
 ```
 
-### Aliases (optional)
+### Aliases files (optional)
 
 If your gulp/ folder contains an `.json`, `.cson`, `.yml` or `.yaml` file `load-gulp-config` will use that to define your tasks aliases (like `gulp.task('default', ['task1', 'task2']);`).
 
