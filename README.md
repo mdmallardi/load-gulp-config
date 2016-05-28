@@ -145,3 +145,5 @@ Thank's to the [`load-grunt-config`](https://www.npmjs.com/package/load-grunt-co
 - [cson](https://www.npmjs.com/package/cson "CoffeeScript-Object-Notation Parser. Same as JSON but for CoffeeScript objects.")
 - [glob](https://www.npmjs.com/package/glob "A little globber")
 
+## License
+[MIT](https://github.com/adriancmiranda/load-gulp-config/blob/master/LICENSE "MIT LICENSE")
