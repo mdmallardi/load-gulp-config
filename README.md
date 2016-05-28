@@ -95,7 +95,7 @@ module.exports = function(gulp, data, util, taskName){
 };
 ```
 
-### Aliases
+### Aliases (optional)
 
 If your gulp/ folder contains an `.json`, `.cson`, `.yml` or `.yaml` file `load-gulp-config` will use that to define your tasks aliases (like `gulp.task('default', ['task1', 'task2']);`).
 
@@ -126,3 +126,5 @@ JSON file:
   "build": ["task1:method", "task2", "task3"]
 }
 ```
+
+Thank's to the [`load-grunt-config`](https://www.npmjs.com/package/load-grunt-config) module idea, that make this one possible.
