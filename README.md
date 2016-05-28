@@ -1,6 +1,22 @@
 # load-gulp-config
 > Allows you to break up your Gulpfile config by task
 
+[![dependencies status][david_dependencies_status_image]][david_dependencies_status_url] 
+[![devDependency status][david_devdependencies_status_image]][david_devdependencies_status_url]
+
+<!-- david dependencies -->
+[david_dependencies_status_image]: https://david-dm.org/adriancmiranda/load-gulp-config.png?theme=shields.io
+[david_dependencies_status_url]: https://david-dm.org/adriancmiranda/load-gulp-config "dependencies status"
+
+<!-- david devDependencies -->
+[david_devdependencies_status_image]: https://david-dm.org/adriancmiranda/load-gulp-config/dev-status.png?theme=shields.io
+[david_devdependencies_status_url]: https://david-dm.org/adriancmiranda/load-gulp-config#info=devDependencies "devDependencies status"
+
+<!-- sourcegraph - views -->
+[sourcegraph_views_image]: https://sourcegraph.com/api/repos/github.com/adriancmiranda/load-gulp-config/counters/views.png
+[sourcegraph_views_url]: https://sourcegraph.com/github.com/adriancmiranda/load-gulp-config "views"
+
+
 ## Features
 - Each task has its own config file e.g. tasks/git.js, tasks/styles.js, tasks/scripts.js, ...
 
