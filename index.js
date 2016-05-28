@@ -47,7 +47,9 @@ function createTask(gulp, options, taskFile){
   var extension = path.extname(taskFile);
   var filename = path.basename(taskFile, extension);
   var task = require(taskFile)(gulp, options.data, loadGulpConfig.util, filename);
-  if(typeof task === 'function'){
+  if(Array.isArray(task)){
+    gulp.task(filename, task);
+  }else if(typeof task === 'function'){
     gulp.task(filename, task.bind(gulp, filename));
   }else if(task === Object(task)){
     Object.keys(task).forEach(function(cmd){
