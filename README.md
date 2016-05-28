@@ -32,11 +32,11 @@ npm i -D adriancmiranda/load-gulp-config
 ## Usage
 
 ```javascript
-// Allows you to break up your Gulpfile config by task
+// Load multiple gulp tasks using globbing patterns.
 // @see https://github.com/adriancmiranda/load-gulp-config
 var config = require('load-gulp-config');
 
-// Specifics of npm's package.json handling
+// Specifics of npm's package.json handling.
 // @see https://docs.npmjs.com/files/package.json
 var pack = config.util.readJSON('package.json');
 
