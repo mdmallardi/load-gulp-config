@@ -70,9 +70,10 @@ module.exports = function(gulp, data, util, taskName){
 Returning a function:
 
 ```javascript
-module.exports = function(){
+module.exports = function(gulp, data){
 	'use strict';
-
+	
+	console.log('\t- anyValue:', data.anyValue, '\n\t- package.version:', data.version);
 	return function(methodName, callback){
 		// return gulp.src(...);
 	};
