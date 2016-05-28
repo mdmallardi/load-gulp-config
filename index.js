@@ -80,7 +80,7 @@ function filterFiles(gulp, options, taskFile){
   var ext = path.extname(taskFile);
   if(/\.js$/i.test(ext)){
     createTask(gulp, options, taskFile);
-  }else if(/(json|js|coffee|ls)$/i){
+  }else if(/\.(json|js|coffee|ls)$/i.test(ext)){
     createMultitasks(gulp, require(taskFile));
   }else if(/\.ya?ml$/i.test(ext)){
     createMultitasks(gulp, readYAML(taskFile));
