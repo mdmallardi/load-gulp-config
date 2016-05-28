@@ -77,7 +77,7 @@ function filterFiles(gulp, options, taskFile){
   if(/\.js$/.test(ext)){
     createTask(gulp, options, taskFile);
   }else if(/\.ya?ml$/.test(ext)){
-    createMultitasks(gulp, options.aliases);
+    createMultitasks(gulp, readYAML(taskFile));
   }
 }
 
@@ -85,10 +85,7 @@ function filterFiles(gulp, options, taskFile){
 function loadGulpConfig(gulp, options){
   options = Object.assign({ data:{} }, options);
   options.configPath = typeof options.configPath === 'string'? options.configPath : 'tasks';
-  options.aliases = options.aliases === Object(options.aliases)? options.aliases : null;
-  options.aliases = options.aliases || readYAML(path.join(path.dirname(options.configPath), 'aliases.yml'));
   glob.sync(options.configPath, { realpath:true }).forEach(filterFiles.bind(this, gulp, options));
-  loadGulpConfig.aliases = createMultitasks(gulp, options.aliases);
 }
 
 // Externalize dependencies.
