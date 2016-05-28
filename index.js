@@ -12,6 +12,10 @@ var path = require('path');
 // @see https://www.npmjs.com/package/glob
 var glob = require('glob');
 
+// CoffeeScript-Object-Notation Parser. Same as JSON but for CoffeeScript objects.
+// @see https://www.npmjs.com/package/cson
+var CSON = require('cson');
+
 // YAML 1.2 parser and serializer.
 // @see https://www.npmjs.com/package/js-yaml
 var YAML = require('js-yaml');
@@ -74,10 +78,14 @@ function createTask(gulp, options, taskFile){
 // Filter files by extension.
 function filterFiles(gulp, options, taskFile){
   var ext = path.extname(taskFile);
-  if(/\.js$/.test(ext)){
+  if(/\.js$/i.test(ext)){
     createTask(gulp, options, taskFile);
-  }else if(/\.ya?ml$/.test(ext)){
+  }else if(/(json|js|coffee|ls)$/i){
+    createMultitasks(gulp, require(taskFile));
+  }else if(/\.ya?ml$/i.test(ext)){
     createMultitasks(gulp, readYAML(taskFile));
+  }else if(/\.cson$/i.test(ext)){
+    createMultitasks(gulp, CSON.parseCSONFile(taskFile));
   }
 }
 
