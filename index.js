@@ -43,7 +43,7 @@ function readYAML(filepath){
 // Define a task using [Orchestrator](https://github.com/robrich/orchestrator).
 // @see https://github.com/gulpjs/gulp/blob/master/docs/API.md#gulptaskname--deps--fn
 function createTask(gulp, options, taskFile){
-  var cmds = [];
+  var alias, cmds = [];
   var extension = path.extname(taskFile);
   var filename = path.basename(taskFile, extension);
   var task = require(taskFile)(gulp, options.data, loadGulpConfig.util, filename);
@@ -56,9 +56,13 @@ function createTask(gulp, options, taskFile){
   }else if(task === Object(task)){
     Object.keys(task).forEach(function(cmd){
       if(typeof task[cmd] === 'function'){
-        var alias = [filename, ':', cmd].join('');
-        gulp.task(alias, task[cmd].bind(gulp.task, cmd));
-        cmds.push(alias);
+        if('default' === cmd){
+          gulp.task(filename, task[cmd].bind(gulp.task, cmd));
+        }else{
+          alias = [filename, ':', cmd].join('');
+          gulp.task(alias, task[cmd].bind(gulp.task, cmd));
+          cmds.push(alias);
+        }
       }
     });
     gulp.task(filename, cmds);
