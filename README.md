@@ -1,7 +1,7 @@
 # load-gulp-config
 > Allows you to break up your Gulpfile config by task
 
-[![dependencies status][david_dependencies_status_image]][david_dependencies_status_url] 
+[![dependencies status][david_dependencies_status_image]][david_dependencies_status_url]
 [![devDependency status][david_devdependencies_status_image]][david_devdependencies_status_url]
 
 <!-- david dependencies -->
@@ -55,7 +55,7 @@ var pack = config.util.readJSON('package.json');
 config(gulp, {
   // path to task's files, defaults to gulp dir.
   configPath: config.util.path.join('tasks', '*.{js,json,coffee,cson,yml,yaml}'),
-  
+
   // data passed into config task.
   data:Object.assign({ someCfg:{}, anyValue:1, anyParams:[] }, pack)
 });
@@ -70,9 +70,9 @@ module.exports = function(gulp, data, util, taskName){
 	'use strict';
 
 	gulp.task(taskName, ['anotherTask:method'], function(callback){
-		// return gulp.src(util.path.join('files/', '**/*.js'));
+		// return gulp.src(util.path.join(data.appDirs.scripts, '**/*.js'));
 	});
-	
+
 	gulp.task(taskName +':method', function(callback){
 		// return gulp.src(util.path.join('files/', '**/*.*'));
 	});
@@ -84,14 +84,14 @@ Returning a function:
 ```javascript
 module.exports = function(gulp, data){
 	'use strict';
-	
+
 	console.log([
 		'\t- someCfg:'+ data.someCfg,
 		'\t- anyValue:'+ data.anyValue,
 		'\t- anyParams:'+ data.anyParams,
 		'\t- package.version:'+ data.version
 	].join('\n'));
-	
+
 	return function(methodName, callback){
 		// return gulp.src(util.path.join(data.someCfg.dir, '**/*.js'));
 	};
@@ -104,7 +104,7 @@ Returning a object:
 ```javascript
 module.exports = function(gulp, data, util, taskName){
 	'use strict';
-  
+
 	return {
 		cmd1:function(methodName, callback){
 			// return gulp.src(...);
@@ -127,12 +127,12 @@ The following examples show the same aliases definition written in various forma
 YAML file:
 
 ```yaml
---- 
-default: 
+---
+default:
   - 'build'
   - 'task2'
 
-build: 
+build:
   - 'task1:method'
   - 'task2'
   - 'task3'

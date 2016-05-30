@@ -2,7 +2,7 @@
 {
   "name": "load-gulp-config",
   "main": "index.js",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Allows you to break up your Gulpfile config by task",
   "license": "MIT",
   "homepage": "https://github.com/adriancmiranda/load-gulp-config",
