@@ -40,6 +40,14 @@ function readYAML(filepath){
   return buffer;
 }
 
+// Join all arguments together and normalize the resulting path.
+function joinPath(dirname){
+	return function(){
+		var args = Array.prototype.slice.call(arguments);
+		return path.join.apply(path.join, [dirname].concat(args));
+	};
+}
+
 // Define a task using [Orchestrator](https://github.com/robrich/orchestrator).
 // @see https://github.com/gulpjs/gulp/blob/master/docs/API.md#gulptaskname--deps--fn
 function createTask(gulp, options, taskFile){
@@ -111,6 +119,7 @@ loadGulpConfig.util = {
   glob:glob,
   cson:CSON,
   yaml:YAML,
+  joinPath:joinPath,
   readJSON:readJSON,
   readYAML:readYAML
 };
