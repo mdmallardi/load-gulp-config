@@ -20,6 +20,22 @@ var CSON = require('cson');
 // @see https://www.npmjs.com/package/js-yaml
 var YAML = require('js-yaml');
 
+function isFunction(value){
+  return typeof value === 'function';
+}
+
+function isString(value){
+  return typeof value === 'string';
+}
+
+function isObject(value){
+  return Object.prototype.toString.call(value) === '[object Object]';
+}
+
+function isLikeObject(value){
+  return value === Object(value);
+}
+
 // Synchronous version of `fs.readFile`. Returns the contents of the file and parse to JSON.
 // @see https://nodejs.org/api/fs.html#fs_fs_readfilesync_file_options
 function readJSON(filepath){
@@ -41,11 +57,21 @@ function readYAML(filepath){
 }
 
 // Join all arguments together and normalize the resulting path.
-function joinPath(dirname){
-	return function(){
-		var args = Array.prototype.slice.call(arguments);
-		return path.join.apply(path.join, [dirname].concat(args));
-	};
+function rgdir(dirname){
+  return function(){
+    var args = Array.prototype.slice.call(arguments);
+    if(args.length){
+    	return path.join.apply(path.join, [dirname].concat(args));
+    }
+    return dirname;
+  };
+}
+
+function rgdirs(hash){
+  Object.keys(hash).forEach(function(dirname){
+    hash[dirname] = rgdir(dirname);
+  });
+  return hash;
 }
 
 // Define a task using [Orchestrator](https://github.com/robrich/orchestrator).
@@ -57,13 +83,13 @@ function createTask(gulp, options, taskFile){
   var task = require(taskFile)(gulp, options.data, loadGulpConfig.util, filename);
   if(Array.isArray(task)){
     gulp.task(filename, task);
-  }else if(typeof task === 'string'){
+  }else if(isString(task)){
     gulp.task(filename, [task]);
-  }else if(typeof task === 'function'){
+  }else if(isFunction(task)){
     gulp.task(filename, task.bind(gulp, filename));
-  }else if(task === Object(task)){
+  }else if(isLikeObject(task)){
     Object.keys(task).forEach(function(cmd){
-      if(typeof task[cmd] === 'function'){
+      if(isFunction(task[cmd])){
         if('default' === cmd){
           gulp.task(filename, task[cmd].bind(gulp.task, cmd));
         }else{
@@ -108,8 +134,10 @@ function filterFiles(gulp, options, taskFile){
 // Load multiple gulp tasks using globbing patterns.
 function loadGulpConfig(gulp, options){
   options = Object.assign({ data:{} }, options);
-  options.configPath = typeof options.configPath === 'string'? options.configPath : 'tasks';
+  options.dirs = isObject(options.dirs)? options.dirs : {};
+  options.configPath = isString(options.configPath)? options.configPath : 'tasks';
   glob.sync(options.configPath, { realpath:true }).forEach(filterFiles.bind(this, gulp, options));
+  loadGulpConfig.util.dir = rgdirs(options.dirs);
 }
 
 // Externalize dependencies.
@@ -119,7 +147,6 @@ loadGulpConfig.util = {
   glob:glob,
   cson:CSON,
   yaml:YAML,
-  joinPath:joinPath,
   readJSON:readJSON,
   readYAML:readYAML
 };
