@@ -69,7 +69,7 @@ function rgdir(dirname){
 
 function rgdirs(hash){
 	Object.keys(hash).forEach(function(dirname){
-		hash[dirname] = rgdir(dirname);
+		hash[dirname] = rgdir(hash[dirname]);
 	});
 	return hash;
 }
