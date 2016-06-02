@@ -92,7 +92,7 @@ module.exports = function(gulp, data){
 		'\t- package.version:'+ data.version
 	].join('\n'));
 
-	return function(methodName, callback){
+	return function(callback){
 		// return gulp.src(util.path.join(data.someCfg.dir, '**/*.js'));
 	};
 };
@@ -106,10 +106,10 @@ module.exports = function(gulp, data, util, taskName){
 	'use strict';
 
 	return {
-		cmd1:function(methodName, callback){
+		cmd1:function(callback){
 			// return gulp.src(...);
 		},
-		cmd2:function(methodName, callback){
+		cmd2:function(callback){
 			// ...
 		}
 	};
