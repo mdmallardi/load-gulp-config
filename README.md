@@ -110,7 +110,7 @@ module.exports = function(gulp, data, util, taskName){
 			// gulp.run('test');
 			// return gulp.src(...);
 		},
-		cmd2:function(callback){
+		cmd:function(callback){
 			// ...
 		}
 	};
