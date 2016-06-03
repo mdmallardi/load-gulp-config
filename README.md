@@ -93,7 +93,6 @@ module.exports = function(gulp, data){
 	].join('\n'));
 
 	return function(callback){
-		// gulp.run('test');
 		// return gulp.src(util.path.join(data.someCfg.dir, '**/*.js'));
 	};
 };
@@ -107,7 +106,8 @@ module.exports = function(gulp, data, util, taskName){
 	'use strict';
 
 	return {
-		cmd1:function(callback){
+		default:function(callback){
+			// gulp.run('test');
 			// return gulp.src(...);
 		},
 		cmd2:function(callback){
