@@ -89,17 +89,25 @@ function createTask(gulp, options, taskFile){
 		gulp.task(filename, task);
 	}else if(isLikeObject(task)){
 		Object.keys(task).forEach(function(cmd){
-			if(isFunction(task[cmd])){
+			var fn, cmap = task[cmd];
+			if(isFunction(cmap)){
 				if('default' === cmd){
-					defaultFn = task[cmd];
+					defaultFn = cmap;
 				}else{
 					alias = [filename, ':', cmd].join('');
-					gulp.task(alias, task[cmd]);
+					gulp.task(alias, cmap);
 					cmds.push(alias);
 				}
+			}else if(Array.isArray(cmap) && isFunction(cmap[cmap.length - 1])){
+				fn = cmap.pop();
+				gulp.task(filename, cmap, fn);
 			}
 		});
-		gulp.task(filename, cmds, defaultFn);
+		if(cmds.length){
+			gulp.task(filename, cmds, defaultFn);
+		}else if(isFunction(defaultFn)){
+			gulp.task(filename, defaultFn);
+		}
 	}
 }
 
