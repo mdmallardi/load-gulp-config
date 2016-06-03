@@ -106,10 +106,9 @@ module.exports = function(gulp, data, util, taskName){
 	'use strict';
 
 	return {
-		default:function(callback){
-			// gulp.run('test');
+		default:['test', 'lint', function(callback){
 			// return gulp.src(...);
-		},
+		}],
 		cmd:function(callback){
 			// ...
 		}
