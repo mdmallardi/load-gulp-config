@@ -77,7 +77,7 @@ function rgdirs(hash){
 // Define a task using [Orchestrator](https://github.com/robrich/orchestrator).
 // @see https://github.com/gulpjs/gulp/blob/master/docs/API.md#gulptaskname--deps--fn
 function createTask(gulp, options, taskFile){
-	var defaultFn, alias, cmds = [];
+	var ctrl, defaultFn, alias, cmds = [];
 	var extension = path.extname(taskFile);
 	var filename = path.basename(taskFile, extension);
 	var task = require(taskFile)(gulp, options.data, loadGulpConfig.util, filename);
@@ -89,7 +89,7 @@ function createTask(gulp, options, taskFile){
 		gulp.task(filename, task);
 	}else if(isLikeObject(task)){
 		Object.keys(task).forEach(function(cmd){
-			var fn, cmap = task[cmd];
+			var cmap = task[cmd];
 			if(isFunction(cmap)){
 				if('default' === cmd){
 					defaultFn = cmap;
@@ -99,8 +99,8 @@ function createTask(gulp, options, taskFile){
 					cmds.push(alias);
 				}
 			}else if(Array.isArray(cmap) && isFunction(cmap[cmap.length - 1])){
-				fn = cmap.pop();
-				gulp.task(filename, cmap, fn);
+				ctrl = cmap.pop();
+				gulp.task(filename, cmap, ctrl);
 			}
 		});
 		if(cmds.length){
