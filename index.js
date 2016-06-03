@@ -74,10 +74,21 @@ function rgdirs(hash){
 	return hash;
 }
 
+function mapTaskObject(filename, task, cmd){
+	var fn, isDefault = /^default$/i.test(cmd);
+	filename = isDefault? filename : [filename, ':', cmd].join('');
+	cmd = task[cmd];
+	if(isFunction(cmd)){
+		return { name:filename, fn:cmd, isDefault:isDefault };
+	}else if(Array.isArray(cmd)){
+		fn = isFunction(cmd[cmd.length - 1])? cmd.pop() : void(0);
+		return { name:filename, fn:fn, isDefault:isDefault, cmds:cmd };
+	}
+}
+
 // Define a task using [Orchestrator](https://github.com/robrich/orchestrator).
 // @see https://github.com/gulpjs/gulp/blob/master/docs/API.md#gulptaskname--deps--fn
 function createTask(gulp, options, taskFile){
-	var ctrl, defaultFn, alias, cmds = [];
 	var extension = path.extname(taskFile);
 	var filename = path.basename(taskFile, extension);
 	var task = require(taskFile)(gulp, options.data, loadGulpConfig.util, filename);
@@ -88,26 +99,17 @@ function createTask(gulp, options, taskFile){
 	}else if(isFunction(task)){
 		gulp.task(filename, task);
 	}else if(isLikeObject(task)){
-		Object.keys(task).forEach(function(cmd){
-			var cmap = task[cmd];
-			if(isFunction(cmap)){
-				if('default' === cmd){
-					defaultFn = cmap;
+		Object.keys(task).map(mapTaskObject.bind(this, filename, task)).forEach(function(task){
+			if(task.cmds){
+				if(isFunction(task.fn)){
+					gulp.task(task.name, task.cmds, task.fn);
 				}else{
-					alias = [filename, ':', cmd].join('');
-					gulp.task(alias, cmap);
-					cmds.push(alias);
+					gulp.task(task.name, task.cmds);
 				}
-			}else if(Array.isArray(cmap) && isFunction(cmap[cmap.length - 1])){
-				ctrl = cmap.pop();
-				gulp.task(filename, cmap, ctrl);
+			}else{
+				gulp.task(task.name, task.fn);
 			}
 		});
-		if(cmds.length){
-			gulp.task(filename, cmds, defaultFn);
-		}else if(isFunction(defaultFn)){
-			gulp.task(filename, defaultFn);
-		}
 	}
 }
 
