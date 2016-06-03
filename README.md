@@ -93,6 +93,7 @@ module.exports = function(gulp, data){
 	].join('\n'));
 
 	return function(callback){
+		// gulp.run('test');
 		// return gulp.src(util.path.join(data.someCfg.dir, '**/*.js'));
 	};
 };
