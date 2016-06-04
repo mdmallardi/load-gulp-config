@@ -19,8 +19,7 @@
 
 ## Features
 - Each task has its own config file e.g. `tasks/git.js`, `tasks/styles.js`, `tasks/scripts.js`, ...
-- Easily register task aliases with aliases `YAML` or `CSON` files.
-- Support for `CoffeeScript` files.
+- Easily register task aliases with aliases `YAML` file.
 
 
 ## Installation
@@ -54,7 +53,7 @@ var pack = config.util.readJSON('package.json');
 
 config(gulp, {
   // path to task's files, defaults to gulp dir.
-  configPath: config.util.path.join('tasks', '*.{js,json,coffee,cson,yml,yaml}'),
+  configPath: config.util.path.join('tasks', '*.{js,json,yml,yaml}'),
 
   // data passed into config task.
   data:Object.assign({ someCfg:{}, anyValue:1, anyParams:[] }, pack)
@@ -82,7 +81,7 @@ module.exports = function(gulp, data, util, taskName){
 Returning a function:
 
 ```javascript
-module.exports = function(gulp, data){
+module.exports = function(gulp, data, util){
 	'use strict';
 
 	console.log([
@@ -106,7 +105,7 @@ module.exports = function(gulp, data, util, taskName){
 	'use strict';
 
 	return {
-		default:['test', 'lint', function(callback){
+		default:['test:'+ taskName, 'lint:'+ taskName, function(callback){
 			// return gulp.src(...);
 		}],
 		cmd:function(callback){
@@ -118,7 +117,7 @@ module.exports = function(gulp, data, util, taskName){
 
 ### Aliases files (optional)
 
-If your gulp/ folder contains an `.json`, `.cson`, `.yml` or `.yaml` file `load-gulp-config` will use that to define your tasks aliases (like `gulp.task('default', ['task1', 'task2']);`).
+If your gulp/ folder contains an `.json`, `.yml` or `.yaml` file `load-gulp-config` will use that to define your tasks aliases (like `gulp.task('default', ['task1', 'task2']);`).
 
 The following examples show the same aliases definition written in various formats
 
@@ -150,7 +149,6 @@ JSON file:
 
 Thank's to the [`load-grunt-config`](https://www.npmjs.com/package/load-grunt-config "Load multiple grunt tasks using globbing patterns") task idea and following modules, that make this one possible.
 - [js-yaml](https://www.npmjs.com/package/js-yaml "YAML 1.2 parser and serializer")
-- [cson](https://www.npmjs.com/package/cson "CoffeeScript-Object-Notation Parser. Same as JSON but for CoffeeScript objects.")
 - [glob](https://www.npmjs.com/package/glob "A little globber")
 
 ## License
