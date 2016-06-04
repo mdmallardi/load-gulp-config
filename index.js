@@ -89,11 +89,13 @@ function mapTaskObject(filename, task, cmd){
 // Define a task using [Orchestrator](https://github.com/robrich/orchestrator).
 // @see https://github.com/gulpjs/gulp/blob/master/docs/API.md#gulptaskname--deps--fn
 function createTask(gulp, options, taskFile){
+	var fn;
 	var extension = path.extname(taskFile);
 	var filename = path.basename(taskFile, extension);
 	var task = require(taskFile)(gulp, options.data, loadGulpConfig.util, filename);
 	if(Array.isArray(task)){
-		gulp.task(filename, task);
+		fn = isFunction(task[task.length - 1])? task.pop() : void(0);
+		gulp.task(filename, task, fn);
 	}else if(isString(task)){
 		gulp.task(filename, [task]);
 	}else if(isFunction(task)){
