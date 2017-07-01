@@ -1,0 +1,26 @@
+@charset "utf-8";
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+// Naming conventions for MonsantoGameEstagiarios2016:
+//
+// 	.ComponentName
+// 	.ComponentName-descendentName
+// 	.ComponentName.is-stateOfComponent
+// 	.ComponentName--modifierName
+//
+// @see https://github.com/suitcss/suit/blob/master/doc/naming-conventions.md
+// @see http://madebymike.com.au/writing/precise-control-responsive-typography
+// @see https://css-tricks.com/molten-leading-css/
+//
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+@import "normalize";
+
+[data-ui-app] {
+  background-color: #222;
+  color: #f1f1f1;
+}
+
+[data-ui-main] {
+  background-color: #222;
+}

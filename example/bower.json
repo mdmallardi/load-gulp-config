@@ -1,0 +1,18 @@
+{
+  "name": "lgcsample",
+  "private": true,
+  "dependencies": {
+    "describe-type": "0.2.0",
+    "modernizr": "Modernizr/Modernizr#2.8.3",
+    "jquery": "jquery/jquery-dist#2.2.4",
+    "proto": "adriancmiranda/Proto#2a149dacc34090087a46a13217034a4efe50bb17",
+    "trace": "adriancmiranda/console.js#1.0.11"
+  },
+  "preen": {
+    "describe-type": "dist/*.js",
+    "modernizr": "modernizr.js",
+    "jquery": "dist/jquery.js",
+    "proto": "dist/Proto.js",
+    "trace": "index.js"
+  }
+}
