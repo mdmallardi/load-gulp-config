@@ -16,10 +16,6 @@ var glob = require('glob');
 // @see https://www.npmjs.com/package/js-yaml
 var YAML = require('js-yaml');
 
-// Runs a sequence of gulp tasks in the specified order.
-// @see https://www.npmjs.com/package/run-sequence
-var runSequence = require('run-sequence');
-
 // https://tc39.github.io/ecma262/#sec-terms-and-definitions-function
 // @see https://www.npmjs.com/package/describe-type
 var isFunction = require('describe-type/is/callable');
@@ -113,7 +109,6 @@ function createTask(gulp, options, taskFile){
 	var extension = path.extname(taskFile);
 	var filename = path.basename(taskFile, extension);
 	var task = require(taskFile)(gulp, options.data, loadGulpConfig.util, filename);
-	var runs = runSequence.use(gulp);
 	if(Array.isArray(task)){
 		fn = isFunction(task[task.length - 1]) ? task.pop() : void(0);
 		gulp.task(filename, task, fn);

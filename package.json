@@ -19,8 +19,7 @@
   "dependencies": {
     "describe-type": "^1.0.0-dev.5",
     "glob": "latest",
-    "js-yaml": "latest",
-    "run-sequence": "^2.2.1"
+    "js-yaml": "latest"
   },
   "scripts": {
     "report:coverage": "echo \"Error: no report:coverage specified\" && exit 1",
