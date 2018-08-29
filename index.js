@@ -16,21 +16,35 @@ var glob = require('glob');
 // @see https://www.npmjs.com/package/js-yaml
 var YAML = require('js-yaml');
 
-function isFunction(value){
-	return typeof value === 'function';
-}
+// Runs a sequence of gulp tasks in the specified order.
+// @see https://www.npmjs.com/package/run-sequence
+var runSequence = require('run-sequence');
 
-function isString(value){
-	return typeof value === 'string';
-}
+// https://tc39.github.io/ecma262/#sec-terms-and-definitions-function
+// @see https://www.npmjs.com/package/describe-type
+var isFunction = require('describe-type/is/callable');
 
-function isObject(value){
-	return Object.prototype.toString.call(value) === '[object Object]';
-}
+// https://tc39.github.io/ecma262/#sec-terms-and-definitions-string-type
+// @see https://www.npmjs.com/package/describe-type
+var isString = require('describe-type/is/string');
 
-function isLikeObject(value){
-	return value === Object(value);
-}
+// https://tc39.github.io/ecma262/#sec-terms-and-definitions-object
+// @see https://www.npmjs.com/package/describe-type
+var isObject = require('describe-type/is/object');
+
+// https://tc39.github.io/ecma262/#sec-exotic-object
+// @see https://www.npmjs.com/package/describe-type
+var isExotic = require('describe-type/is/exotic');
+
+// The reduce() method applies a function against an accumulator and each
+// element in the array (from left to right) to reduce it to a single value.
+// @see https://www.npmjs.com/package/describe-type
+var reduce = require('describe-type/ponyfill/Array.prototype.reduce');
+
+// The reduce() method applies a function against an accumulator and each
+// element in the array (from left to right) to reduce it to a single value.
+// @see https://www.npmjs.com/package/describe-type
+var keys = require('describe-type/ponyfill/Object.keys');
 
 // Synchronous version of `fs.readFile`. Returns the contents of the file and parse to JSON.
 // @see https://nodejs.org/api/fs.html#fs_fs_readfilesync_file_options
@@ -64,7 +78,7 @@ function rgdir(dirname){
 }
 
 function rgdirs(hash){
-	Object.keys(hash).forEach(function(dirname){
+	keys(hash).forEach(function(dirname){
 		hash[dirname] = rgdir(hash[dirname]);
 	});
 	return hash;
@@ -72,13 +86,23 @@ function rgdirs(hash){
 
 function mapTaskObject(filename, task, cmd){
 	var fn, isDefault = /^default$/i.test(cmd);
-	filename = isDefault? filename : [filename, ':', cmd].join('');
+	filename = isDefault ? filename : [filename, ':', cmd].join('');
 	cmd = task[cmd];
 	if(isFunction(cmd)){
-		return { name:filename, fn:cmd, isDefault:isDefault };
+		return { name:filename, isDefault:isDefault, fn:cmd };
 	}else if(Array.isArray(cmd)){
-		fn = isFunction(cmd[cmd.length - 1])? cmd.pop() : void(0);
-		return { name:filename, fn:fn, isDefault:isDefault, cmds:cmd };
+		return reduce(cmd, function (acc, item, index) {
+			if(isFunction(item)){
+				acc.fn = item;
+			}else if(isString(item) && acc.fn){
+				acc.sequence.push(item);
+			}else if(isString(item)){
+				acc.cmds.push(item);
+			}else if(array.of(String, item)) {
+				acc.sequence.push(item);
+			}
+			return acc;
+		}, { name:filename, isDefault:isDefault, fn:null, cmds:[], sequence:[] });
 	}
 }
 
@@ -89,15 +113,16 @@ function createTask(gulp, options, taskFile){
 	var extension = path.extname(taskFile);
 	var filename = path.basename(taskFile, extension);
 	var task = require(taskFile)(gulp, options.data, loadGulpConfig.util, filename);
+	var runs = runSequence.use(gulp);
 	if(Array.isArray(task)){
-		fn = isFunction(task[task.length - 1])? task.pop() : void(0);
+		fn = isFunction(task[task.length - 1]) ? task.pop() : void(0);
 		gulp.task(filename, task, fn);
 	}else if(isString(task)){
 		gulp.task(filename, [task]);
 	}else if(isFunction(task)){
 		gulp.task(filename, task);
-	}else if(isLikeObject(task)){
-		Object.keys(task).map(mapTaskObject.bind(this, filename, task)).forEach(function(task){
+	}else if(isExotic(task)){
+		keys(task).map(mapTaskObject.bind(this, filename, task)).forEach(function(task){
 			if(task.cmds){
 				if(isFunction(task.fn)){
 					gulp.task(task.name, task.cmds, task.fn);
@@ -140,8 +165,8 @@ function filterFiles(gulp, options, taskFile){
 // Load multiple gulp tasks using globbing patterns.
 function loadGulpConfig(gulp, options){
 	options = Object.assign({ data:{} }, options);
-	options.dirs = isObject(options.dirs)? options.dirs : {};
-	options.configPath = isString(options.configPath)? options.configPath : 'tasks';
+	options.dirs = isObject(options.dirs) ? options.dirs : {};
+	options.configPath = isString(options.configPath) ? options.configPath : 'tasks';
 	glob.sync(options.configPath, { realpath:true }).forEach(filterFiles.bind(this, gulp, options));
 	loadGulpConfig.util.dir = rgdirs(options.dirs);
 }
