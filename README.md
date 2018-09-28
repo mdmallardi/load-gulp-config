@@ -153,3 +153,8 @@ Thank's to the [`load-grunt-config`](https://www.npmjs.com/package/load-grunt-co
 
 ## License
 [MIT](https://github.com/adriancmiranda/load-gulp-config/blob/master/LICENSE "MIT LICENSE")
+
+
+<!-- Useful -->
+
+[gulp@4]: https://fettblog.eu/gulp-4-parallel-and-series/
