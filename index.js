@@ -58,7 +58,9 @@ function readYAML(filepath){
 	var buffer = {};
 	try{
 		buffer = YAML.safeLoad(fs.readFileSync(filepath, { schema:YAML.DEFAULT_FULL_SCHEMA }));
-	}catch(error){}
+	}catch(error){
+		console.error(error);
+	}
 	return buffer;
 }
 
