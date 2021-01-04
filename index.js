@@ -57,7 +57,7 @@ function readJSON(filepath){
 function readYAML(filepath){
 	var buffer = {};
 	try{
-		buffer = YAML.safeLoad(fs.readFileSync(filepath, { schema:YAML.DEFAULT_FULL_SCHEMA }));
+		buffer = YAML.load(fs.readFileSync(filepath, { schema:YAML.DEFAULT_FULL_SCHEMA }));
 	}catch(error){
 		console.error(error);
 	}
